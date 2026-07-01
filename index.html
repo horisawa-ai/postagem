@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Postagem · @pulsar.science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070A14;
+  --card:#10152A;
+  --card2:#0C1122;
+  --cyan:#22D3EE;
+  --violet:#7B5CFF;
+  --magenta:#FF2EC4;
+  --text:#EDEFF7;
+  --muted:#8A92AD;
+  --faint:#586080;
+  --line:rgba(255,255,255,0.08);
+  --grad:linear-gradient(120deg,#22D3EE 0%,#7B5CFF 52%,#FF2EC4 100%);
+  --rose:#FB7185;
+  --amber:#FBBF24;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  background:
+    radial-gradient(820px 460px at 8% -10%, rgba(34,211,238,0.14), transparent 60%),
+    radial-gradient(820px 560px at 94% 4%, rgba(255,46,196,0.13), transparent 60%),
+    radial-gradient(720px 720px at 50% 118%, rgba(123,92,255,0.12), transparent 62%),
+    var(--bg);
+  color:var(--text);line-height:1.6;padding:26px 15px 60px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;}
+
+/* HEADER */
+header{margin-bottom:22px;}
+.eyebrow{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:3.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:11px;}
+h1{font-size:clamp(28px,8vw,44px);font-weight:700;line-height:1.02;letter-spacing:-1px;margin-bottom:12px;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.sub{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:0.3px;}
+.brandbar{height:3px;width:100%;border-radius:3px;background:var(--grad);margin-top:16px;opacity:0.9;}
+
+/* AGORA HERO */
+.agora{position:relative;border-radius:20px;padding:22px 22px 20px;overflow:hidden;margin-top:24px;
+  border:1px solid var(--line);background:var(--card);transition:border-color .4s, box-shadow .4s;}
+.agora .glow{position:absolute;inset:0;opacity:.5;pointer-events:none;transition:opacity .4s;}
+.agora .when{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);position:relative;margin-bottom:14px;display:flex;align-items:center;gap:9px;}
+.live{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(34,211,238,.6);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.55);}70%{box-shadow:0 0 0 9px rgba(34,211,238,0);}100%{box-shadow:0 0 0 0 rgba(34,211,238,0);}}
+.verb{position:relative;font-size:clamp(30px,9vw,46px);font-weight:700;line-height:1;letter-spacing:-1px;margin-bottom:10px;}
+.agsub{position:relative;font-size:14px;color:var(--text);margin-bottom:14px;max-width:46ch;}
+.agmeta{position:relative;display:flex;flex-wrap:wrap;gap:8px 10px;font-family:'Space Mono',monospace;font-size:11px;}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted);background:rgba(255,255,255,.02);}
+.chip b{color:var(--text);font-weight:700;}
+.chip.go{border-color:rgba(123,92,255,.5);color:var(--text);}
+
+/* level color theming of hero */
+.lv3 .verb{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lv3{border-color:rgba(123,92,255,.5);box-shadow:0 18px 60px -28px rgba(123,92,255,.9);}
+.lv3 .glow{background:radial-gradient(420px 240px at 80% 10%,rgba(255,46,196,.18),transparent 60%),radial-gradient(420px 240px at 10% 90%,rgba(34,211,238,.16),transparent 60%);}
+.lv2 .verb{color:var(--cyan);}
+.lv2{border-color:rgba(34,211,238,.4);}
+.lv2 .glow{background:radial-gradient(420px 240px at 80% 10%,rgba(34,211,238,.13),transparent 62%);}
+.lv1 .verb{color:var(--amber);}
+.lv1 .glow{background:radial-gradient(420px 240px at 80% 10%,rgba(251,191,36,.10),transparent 62%);}
+.lv0 .verb{color:var(--rose);}
+.lv0{border-color:rgba(251,113,133,.35);}
+.lv0 .glow{background:radial-gradient(420px 240px at 80% 10%,rgba(251,113,133,.12),transparent 62%);}
+
+/* SECTION */
+section{margin-top:30px;}
+h2{font-size:12.5px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--text);margin-bottom:15px;display:flex;align-items:center;gap:10px;}
+h2::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grad);flex:0 0 auto;box-shadow:0 0 12px rgba(123,92,255,0.6);}
+
+/* LEGEND */
+.legend{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:14px 15px;}
+.lgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px 14px;}
+.lkey{display:flex;align-items:center;gap:9px;font-size:12px;}
+.lkey .sw{width:18px;height:18px;border-radius:5px;flex:0 0 auto;}
+.lkey .lt{font-family:'Space Mono',monospace;font-weight:700;font-size:11px;letter-spacing:.5px;}
+.lkey .ld{color:var(--muted);font-size:11px;}
+.sw.t3{background:var(--grad);box-shadow:0 0 11px -1px rgba(123,92,255,.6);}
+.sw.t2{background:rgba(34,211,238,0.5);}
+.sw.t1{background:rgba(90,98,128,0.42);}
+.sw.t0{background:rgba(255,255,255,0.04);border:1px solid rgba(251,113,133,0.4);}
+
+/* CHART */
+.axis{font-family:'Space Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.5px;margin:14px 2px 9px;}
+.chart{display:flex;flex-direction:column;gap:6px;}
+.chead{display:grid;grid-template-columns:42px repeat(7,1fr);gap:5px;padding:0 3px;}
+.chead .hc{font-family:'Space Mono',monospace;font-size:9.5px;color:var(--muted);text-align:center;letter-spacing:.2px;}
+.chead .hc:first-child{font-size:8.5px;color:var(--faint);}
+.dayRow{display:grid;grid-template-columns:42px repeat(7,1fr);gap:5px;align-items:center;width:100%;
+  background:transparent;border:1px solid transparent;border-radius:11px;padding:4px 3px;cursor:pointer;
+  font-family:inherit;transition:background .2s,border-color .2s;}
+.dayRow:hover{background:rgba(255,255,255,.025);}
+.dayRow.sel{border-color:rgba(123,92,255,.5);background:rgba(123,92,255,.09);}
+.dayRow:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+.dlabel{font-family:'Space Mono',monospace;font-weight:700;font-size:11px;text-align:center;letter-spacing:.5px;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:relative;}
+.dlabel .dot{position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--cyan);box-shadow:0 0 7px var(--cyan);}
+.tc{height:32px;border-radius:6px;position:relative;}
+.tc.t3{background:var(--grad);box-shadow:0 0 13px -3px rgba(123,92,255,.55);}
+.tc.t2{background:rgba(34,211,238,0.48);}
+.tc.t1{background:rgba(90,98,128,0.40);}
+.tc.t0{background:rgba(255,255,255,0.035);border:1px solid rgba(251,113,133,0.30);}
+
+/* DETAIL */
+.detail{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:19px 19px 9px;margin-top:16px;}
+.dtop{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:14px;}
+.dfull{font-size:22px;font-weight:700;letter-spacing:-.5px;}
+.dtag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--magenta);border:1px solid rgba(255,46,196,.3);border-radius:999px;padding:4px 10px;}
+.todaytag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(34,211,238,.4);border-radius:999px;padding:4px 10px;}
+.dbest{background:linear-gradient(150deg,rgba(34,211,238,.1),rgba(255,46,196,.08));border:1px solid rgba(34,211,238,.25);border-radius:12px;padding:13px 15px;font-size:14px;margin-bottom:16px;}
+.dbest .bl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:5px;}
+.dbest b{font-weight:600;}
+.brow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);}
+.brow:last-of-type{border-bottom:none;}
+.bname{font-size:13.5px;}
+.bname .bh{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-left:2px;}
+.badge{font-family:'Space Mono',monospace;font-weight:700;font-size:10px;letter-spacing:.8px;border-radius:7px;padding:5px 9px;flex:0 0 auto;}
+.badge.t3{background:var(--grad);color:#06101f;}
+.badge.t2{background:rgba(34,211,238,.2);color:var(--cyan);border:1px solid rgba(34,211,238,.4);}
+.badge.t1{background:rgba(90,98,128,.22);color:#aab2cc;border:1px solid rgba(120,128,160,.35);}
+.badge.t0{background:rgba(251,113,133,.14);color:var(--rose);border:1px solid rgba(251,113,133,.35);}
+.dnote{font-size:12.8px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding:13px 0 14px;}
+
+/* RANK */
+.rank{display:flex;flex-direction:column;gap:8px;}
+.ritem{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 15px;}
+.rnum{font-family:'Space Mono',monospace;font-weight:700;font-size:16px;min-width:22px;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.rtext{font-size:13.5px;}
+.rtext b{font-weight:600;}
+.rtext span{color:var(--muted);}
+.tip{margin-top:12px;background:linear-gradient(150deg,rgba(34,211,238,.1),rgba(255,46,196,.08));border:1px solid rgba(34,211,238,.25);border-radius:12px;padding:13px 15px;font-size:13.5px;line-height:1.55;}
+.tip b{color:var(--cyan);}
+
+/* COLS */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:15px 15px 6px;}
+.col h3{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:13px;display:flex;align-items:center;gap:7px;}
+.col.up h3{color:var(--cyan);}.col.down h3{color:var(--rose);}
+.col ul{list-style:none;}
+.col li{font-size:12.4px;line-height:1.48;padding:0 0 12px 15px;position:relative;}
+.col li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:2px;}
+.col.up li::before{background:var(--cyan);}.col.down li::before{background:var(--rose);}
+
+/* HOLIDAYS */
+.block{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px 17px 5px;}
+.crow{display:flex;gap:13px;padding:11px 0;border-bottom:1px dashed var(--line);align-items:baseline;}
+.crow:last-child{border-bottom:none;}
+.cmonth{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--cyan);min-width:74px;flex:0 0 auto;text-transform:uppercase;font-weight:700;}
+.cdesc{font-size:12.5px;line-height:1.5;}.cdesc b{font-weight:600;}
+.fire{color:var(--magenta);}
+
+/* VALIDATE */
+.validate{background:linear-gradient(155deg,rgba(123,92,255,.13),rgba(255,46,196,.09));border:1px solid rgba(123,92,255,.35);border-radius:18px;padding:19px;}
+.validate .vt{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;}
+.validate p{font-size:13.6px;line-height:1.6;}.validate p b{color:var(--magenta);font-weight:600;}
+
+footer{margin-top:32px;text-align:center;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:1.4px;color:var(--faint);line-height:1.8;}
+footer .h{color:var(--cyan);}
+
+@media (max-width:430px){.cols{grid-template-columns:1fr;}.tc{height:28px;}.cmonth{min-width:66px;}.lgrid{grid-template-columns:1fr;}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Radar de postagem</div>
+    <h1>Quando Postar</h1>
+    <div class="sub">@pulsar.science · público mulher 35 a 54, Brasil · horário do seu aparelho</div>
+    <div class="brandbar"></div>
+  </header>
+
+  <!-- AGORA -->
+  <div class="agora lv1" id="agora">
+    <div class="glow"></div>
+    <div class="when"><span class="live"></span><span id="agWhen">Carregando</span></div>
+    <div class="verb" id="agVerb">...</div>
+    <div class="agsub" id="agSub"></div>
+    <div class="agmeta">
+      <span class="chip" id="agBlock"></span>
+      <span class="chip go" id="agNext"></span>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <section>
+    <h2>Níveis</h2>
+    <div class="legend">
+      <div class="lgrid">
+        <div class="lkey"><span class="sw t3"></span><div><span class="lt" style="color:#FF2EC4">MELHOR</span> <span class="ld">posta o melhor aqui</span></div></div>
+        <div class="lkey"><span class="sw t2"></span><div><span class="lt" style="color:#22D3EE">BOA</span> <span class="ld">rende bem</span></div></div>
+        <div class="lkey"><span class="sw t1"></span><div><span class="lt" style="color:#aab2cc">RUIM</span> <span class="ld">alcance baixo</span></div></div>
+        <div class="lkey"><span class="sw t0"></span><div><span class="lt" style="color:#FB7185">MERDA</span> <span class="ld">tá jogando fora</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHART -->
+  <section>
+    <h2>Semana inteira</h2>
+    <div class="axis">Colunas = faixas de horário, a partir de cada hora marcada. Toca num dia pra ver o detalhe.</div>
+    <div class="chart">
+      <div class="chead">
+        <div class="hc">DIA</div>
+        <div class="hc">0h</div><div class="hc">6h</div><div class="hc">9h</div><div class="hc">12h</div><div class="hc">14h</div><div class="hc">18h</div><div class="hc">22h</div>
+      </div>
+      <div id="rows"></div>
+    </div>
+    <div class="detail" id="detail"></div>
+  </section>
+
+  <!-- RANK -->
+  <section>
+    <h2>Top janelas da semana</h2>
+    <div class="rank">
+      <div class="ritem"><div class="rnum">1</div><div class="rtext"><b>Domingo, 19h às 21h</b> <span>· prime absoluto</span></div></div>
+      <div class="ritem"><div class="rnum">2</div><div class="rtext"><b>Quinta, 19h às 21h</b> <span>· maior save e share</span></div></div>
+      <div class="ritem"><div class="rnum">3</div><div class="rtext"><b>Terça e quarta, 19h às 21h30</b></div></div>
+      <div class="ritem"><div class="rnum">4</div><div class="rtext"><b>Almoço, 12h às 13h</b> <span>· terça a quinta</span></div></div>
+      <div class="ritem"><div class="rnum">5</div><div class="rtext"><b>Domingo de manhã, 10h às 12h</b></div></div>
+    </div>
+    <div class="tip"><b>Dica de ouro:</b> posta uns 30 a 45 min antes do pico (tipo 18h30). O Reel acumula engajamento inicial antes da onda chegar, e o algoritmo entrega mais forte na hora cheia.</div>
+  </section>
+
+  <!-- COLS -->
+  <section>
+    <h2>O que muda o jogo</h2>
+    <div class="cols">
+      <div class="col up">
+        <h3>▲ Melhora</h3>
+        <ul>
+          <li>Consistência de horário (treina público e algoritmo)</li>
+          <li>Postar 30 a 45 min antes do pico</li>
+          <li>Gancho forte nos 3 primeiros segundos</li>
+          <li>Formato salvável (carrossel, infográfico)</li>
+          <li>Pergunta no fim da legenda pra puxar comentário</li>
+        </ul>
+      </div>
+      <div class="col down">
+        <h3>▼ Piora</h3>
+        <ul>
+          <li>Madrugada e tarde morta (14h às 17h)</li>
+          <li>Sexta e sábado à noite pra conteúdo denso</li>
+          <li>Segunda antes das 9h</li>
+          <li>Horário aleatório, sem rotina</li>
+          <li>Postar na hora de evento gigante (jogo da seleção, final de novela)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOLIDAYS -->
+  <section>
+    <h2>Feriado e sazonalidade</h2>
+    <div class="block">
+      <div class="crow"><div class="cmonth">Feriado</div><div class="cdesc">Feriado solto comporta tipo domingo. <b>Feriadão</b>: o 1º dia despenca (viagem), o último recupera (volta pra casa).</div></div>
+      <div class="crow"><div class="cmonth">Carnaval</div><div class="cdesc">Engajamento <b>some quase 1 semana</b>. Segura o conteúdo bom.</div></div>
+      <div class="crow"><div class="cmonth">Janeiro <span class="fire">▲</span></div><div class="cdesc"><b>Emagrecimento, metabolismo, GLP-1.</b> Resoluções de ano novo, maior janela do ano pro nicho.</div></div>
+      <div class="crow"><div class="cmonth">Outubro <span class="fire">▲</span></div><div class="cdesc"><b>Outubro Rosa.</b> Saúde da mulher, casa com 64% do público.</div></div>
+      <div class="crow"><div class="cmonth">Novembro</div><div class="cdesc"><b>Novembro Azul.</b> Testosterona e saúde do homem.</div></div>
+    </div>
+  </section>
+
+  <!-- VALIDATE -->
+  <section>
+    <div class="validate">
+      <div class="vt">Valida com o seu dado</div>
+      <p>Essa grade é o ponto de partida pelo seu perfil de público. O dado mais valioso é só seu: em Insights, aba Público, <b>rola pra baixo</b> e olha os "Horários mais ativos" dos seguidores, por dia e hora. Usa pra calibrar. E anota <b>horário x desempenho</b> dos Reels por 3 ou 4 semanas: a grade se ajusta sozinha.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="h">@pulsar.science</span> · #pulsarscience<br>
+    radar ao vivo · baseado no fuso do seu aparelho
+  </footer>
+
+</div>
+
+<script>
+const TIERS = {
+  3:{label:'MELHOR', verb:'POSTA AGORA', sub:'Janela de ouro. Joga o teu melhor conteúdo aqui.'},
+  2:{label:'BOA', verb:'PODE POSTAR', sub:'Janela boa, rende bem. Vale postar.'},
+  1:{label:'RUIM', verb:'SEGURA', sub:'Alcance baixo. Só posta se for necessário.'},
+  0:{label:'MERDA', verb:'NEM PENSA', sub:'Zona morta. Postar agora é jogar conteúdo fora.'}
+};
+
+const BLOCKS = [
+  {name:'Madrugada', h:'0h às 6h', start:0, end:6},
+  {name:'Manhã cedo', h:'6h às 9h', start:6, end:9},
+  {name:'Manhã', h:'9h às 12h', start:9, end:12},
+  {name:'Almoço', h:'12h às 14h', start:12, end:14},
+  {name:'Tarde', h:'14h às 18h', start:14, end:18},
+  {name:'Noite', h:'18h às 22h', start:18, end:22},
+  {name:'Fim de noite', h:'22h às 0h', start:22, end:24}
+];
+
+// index = JS getDay() (0=Dom ... 6=Sab). grid = tier per BLOCK.
+const DAYS = [
+  {i:0, ab:'DOM', full:'Domingo', tag:'Prime da semana', grid:[0,1,3,2,0,3,2], best:'10h às 12h e 19h às 22h',
+   note:'A melhor janela da semana inteira é a noite de domingo. Público em casa, modo preparando pra semana. Conteúdo educativo voa aqui.'},
+  {i:1, ab:'SEG', full:'Segunda', tag:'Aquecendo', grid:[0,1,1,2,0,3,1], best:'19h às 21h',
+   note:'Público voltando pra rotina. Evita post importante antes das 9h. A noite já rende bem.'},
+  {i:2, ab:'TER', full:'Terça', tag:'Dia forte', grid:[0,1,2,3,0,3,1], best:'12h às 13h e 19h às 21h30',
+   note:'Um dos dias mais fortes da semana. Almoço e noite no talo.'},
+  {i:3, ab:'QUA', full:'Quarta', tag:'Dia forte', grid:[0,1,2,3,0,3,1], best:'12h às 13h e 19h às 21h30',
+   note:'Pico do meio de semana. Público bem engajado e salvando conteúdo.'},
+  {i:4, ab:'QUI', full:'Quinta', tag:'Melhor dia útil', grid:[0,1,2,3,0,3,2], best:'12h às 13h e 19h às 22h',
+   note:'Costuma ser o melhor dia útil. A noite tem a maior taxa de save e compartilhamento.'},
+  {i:5, ab:'SEX', full:'Sexta', tag:'Cai à noite', grid:[0,1,2,2,0,2,1], best:'12h às 13h e 18h às 20h',
+   note:'Cai depois das 20h (galera sai e relaxa). Se for conteúdo denso, joga pro horário do almoço.'},
+  {i:6, ab:'SAB', full:'Sábado', tag:'Dia fraco', grid:[0,1,2,1,0,2,1], best:'10h às 12h',
+   note:'Dia mais fraco pra ciência. Público no lazer. Conteúdo leve e curioso rende mais que o técnico.'}
+];
+
+// chart order: Seg a Dom (semana de trabalho na frente, fim de semana no fim)
+const ORDER = [1,2,3,4,5,6,0];
+
+function dayByIndex(idx){ return DAYS.find(d => d.i === idx); }
+function blockIndexForHour(h){ for(let b=0;b<BLOCKS.length;b++){ if(h>=BLOCKS[b].start && h<BLOCKS[b].end) return b; } return 0; }
+function tierAt(dayIdx, hour){ return dayByIndex(dayIdx).grid[ blockIndexForHour(hour) ]; }
+function hourLabel(h){ return h + 'h'; }
+
+let selected = null;
+
+function renderRows(){
+  const now = new Date();
+  const today = now.getDay();
+  const host = document.getElementById('rows');
+  host.innerHTML = '';
+  const frag = document.createDocumentFragment();
+  ORDER.forEach(idx=>{
+    const d = dayByIndex(idx);
+    const row = document.createElement('button');
+    row.className = 'dayRow' + (idx===today ? ' today':'');
+    row.setAttribute('aria-label', d.full);
+    let cells = `<div class="dlabel">${d.ab}${idx===today?'<span class="dot"></span>':''}</div>`;
+    d.grid.forEach(t=>{ cells += `<div class="tc t${t}"></div>`; });
+    row.innerHTML = cells;
+    row.addEventListener('click', ()=> selectDay(idx));
+    frag.appendChild(row);
+  });
+  host.appendChild(frag);
+}
+
+function selectDay(idx){
+  selected = idx;
+  const today = new Date().getDay();
+  document.querySelectorAll('.dayRow').forEach((r,pos)=>{
+    r.classList.toggle('sel', ORDER[pos]===idx);
+  });
+  const d = dayByIndex(idx);
+  let rows = '';
+  BLOCKS.forEach((b,bi)=>{
+    const t = d.grid[bi];
+    rows += `<div class="brow"><div class="bname">${b.name} <span class="bh">${b.h}</span></div><span class="badge t${t}">${TIERS[t].label}</span></div>`;
+  });
+  document.getElementById('detail').innerHTML =
+    `<div class="dtop"><div class="dfull">${d.full}</div><span class="dtag">${d.tag}</span>${idx===today?'<span class="todaytag">Hoje</span>':''}</div>`+
+    `<div class="dbest"><span class="bl">Melhores horários</span><b>${d.best}</b></div>`+
+    rows+
+    `<div class="dnote">${d.note}</div>`;
+}
+
+function nextGoldWindow(today, currentHour){
+  for(let step=1; step<=168; step++){
+    const total = currentHour + step;
+    const dIdx = (today + Math.floor(total/24)) % 7;
+    const hod = ((total % 24) + 24) % 24;
+    if(tierAt(dIdx, hod) === 3){
+      const ptotal = total - 1;
+      const pIdx = (today + Math.floor(ptotal/24)) % 7;
+      const phod = ((ptotal % 24) + 24) % 24;
+      if(tierAt(pIdx, phod) !== 3){
+        return {dayIdx:dIdx, hour:hod};
+      }
+    }
+  }
+  return null;
+}
+
+function updateAgora(){
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const min = now.getMinutes();
+  const d = dayByIndex(day);
+  const bi = blockIndexForHour(hour);
+  const tier = d.grid[bi];
+  const t = TIERS[tier];
+
+  const box = document.getElementById('agora');
+  box.className = 'agora lv' + tier;
+
+  const mm = (min<10?'0':'') + min;
+  document.getElementById('agWhen').textContent = `${d.full} · ${hour}h${mm}`;
+  document.getElementById('agVerb').textContent = t.verb;
+  document.getElementById('agSub').textContent = t.sub;
+  document.getElementById('agBlock').innerHTML = `Bloco: <b>${BLOCKS[bi].name}</b> · ${t.label}`;
+
+  const nextEl = document.getElementById('agNext');
+  if(tier === 3){
+    nextEl.innerHTML = `Aproveita, vai até <b>${BLOCKS[bi].end}h</b>`;
+  } else {
+    const g = nextGoldWindow(day, hour);
+    if(g){
+      const gd = dayByIndex(g.dayIdx);
+      const labelDay = (g.dayIdx===day) ? 'hoje' : gd.full;
+      nextEl.innerHTML = `Próxima janela de ouro: <b>${labelDay}, ${g.hour}h</b>`;
+    } else {
+      nextEl.textContent = 'Sem janela de ouro nos próximos dias';
+    }
+  }
+}
+
+// init
+renderRows();
+selectDay(new Date().getDay());
+updateAgora();
+setInterval(()=>{ updateAgora(); }, 60000);
+</script>
+</body>
+</html>
