@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F7F3EE">
+<title>Posso postar agora? · Dr. Alex Tanaka</title>
+<meta name="description" content="Guia de horários de postagem do Dr. Alex Tanaka, calculado com o público real do Instagram.">
+<meta property="og:title" content="Posso postar agora?">
+<meta property="og:description" content="Guia de horários do Dr. Alex Tanaka · @dralextanaka.urologiainfantil · @master.clinica">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F3EE;
+  --paper:#FBF8F4;
+  --ink:#2B2622;
+  --ink2:#5A5048;
+  --mute:#9A8F84;
+  --line:#E2D9CF;
+  --terra:#B5563A;
+  --t3:#B5563A;
+  --t2:#D99A7F;
+  --t1:#E8C9B8;
+  --t0:#EDE5DC;
+  --sage:#6F7F62;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding:34px 20px 56px;}
+.wrap{max-width:560px;margin:0 auto;}
+.serif{font-family:'Fraunces',Georgia,serif;}
+
+header{margin-bottom:34px;}
+.for{font-size:12px;letter-spacing:.4px;color:var(--mute);}
+.handles{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 8px;}
+.handle{font-size:12px;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--paper);}
+.both{font-size:11.5px;color:var(--mute);margin-top:8px;}
+
+.ask{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(34px,10vw,48px);line-height:1.02;letter-spacing:-.8px;}
+.now{margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0 24px;}
+.clock{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.3px;color:var(--ink2);}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--terra);animation:breathe 2.4s ease-in-out infinite;}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.35}}
+.answer{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(56px,18vw,88px);line-height:.95;letter-spacing:-2px;margin:14px 0 12px;color:var(--terra);}
+.answer.lv0{color:#8C7F74;}
+.answer.lv1{color:#C07A5E;}
+.why{font-size:15px;color:var(--ink2);max-width:40ch;}
+.next{margin-top:16px;font-size:13px;color:var(--ink2);}
+.next b{color:var(--ink);font-weight:600;}
+
+section{margin-top:40px;}
+.kicker{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--mute);margin-bottom:14px;}
+h2{font-family:'Fraunces',serif;font-weight:400;font-size:26px;line-height:1.15;letter-spacing:-.4px;margin-bottom:16px;}
+
+.top{list-style:none;}
+.top li{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.top li:first-child{border-top:1px solid var(--line);}
+.top .n{font-family:'Fraunces',serif;font-size:26px;color:var(--terra);min-width:20px;line-height:1;}
+.top .d{font-size:15px;font-weight:500;}
+.top .h{font-size:13px;color:var(--mute);margin-left:auto;white-space:nowrap;}
+.quote{font-family:'Fraunces',serif;font-size:18px;line-height:1.45;color:var(--ink);margin-top:20px;padding-left:16px;border-left:2px solid var(--terra);}
+
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px;}
+.day{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--ink2);background:transparent;border:1px solid var(--line);border-radius:10px;padding:10px 0 8px;cursor:pointer;position:relative;transition:background .2s,color .2s,border-color .2s;}
+.day:hover{border-color:#CDBFB1;}
+.day.sel{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.day .td{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--terra);}
+.day.sel .td{background:var(--paper);}
+.day:focus-visible,.bar:focus-visible{outline:2px solid var(--terra);outline-offset:2px;}
+
+.dayname{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.dayname .full{font-family:'Fraunces',serif;font-size:24px;}
+.dayname .tag{font-size:12px;color:var(--mute);}
+.chart{display:flex;align-items:flex-end;gap:7px;height:150px;}
+.bar{flex:1;border:none;border-radius:6px 6px 3px 3px;cursor:pointer;position:relative;transition:height .45s cubic-bezier(.2,.8,.2,1),background .3s;}
+.bar.t3{background:var(--t3);}.bar.t2{background:var(--t2);}.bar.t1{background:var(--t1);}.bar.t0{background:var(--t0);}
+.bar.on{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--ink);}
+.bar .here{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:600;color:var(--ink);white-space:nowrap;}
+.hours{display:flex;gap:7px;margin-top:8px;}
+.hours span{flex:1;text-align:center;font-size:11px;color:var(--mute);}
+.pick{margin-top:16px;padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-radius:12px;font-size:14px;color:var(--ink2);min-height:52px;}
+.pick b{color:var(--ink);font-weight:600;}
+.best{margin-top:12px;font-size:14px;}
+.best b{font-weight:600;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-size:12px;color:var(--ink2);}
+.legend span{display:flex;align-items:center;gap:6px;}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+details{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;align-items:center;justify-content:space-between;}
+summary::-webkit-details-marker{display:none;}
+summary .st{font-family:'Fraunces',serif;font-size:22px;}
+summary .plus{font-size:22px;color:var(--terra);transition:transform .25s;line-height:1;}
+details[open] summary .plus{transform:rotate(45deg);}
+.aud{padding:2px 0 22px;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;}
+.stat .v{font-family:'Fraunces',serif;font-size:28px;line-height:1;}
+.stat .l{font-size:12px;color:var(--mute);margin-top:6px;}
+.sub{font-size:13px;font-weight:500;margin:4px 0 10px;}
+.split{display:flex;height:10px;border-radius:999px;overflow:hidden;margin-bottom:8px;}
+.split .m{background:var(--ink);}.split .f{background:var(--t2);}
+.splitl{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:22px;}
+.age{display:grid;grid-template-columns:52px 1fr 46px;align-items:center;gap:10px;margin-bottom:8px;font-size:12.5px;}
+.age .track{height:8px;background:var(--t0);border-radius:999px;overflow:hidden;}
+.age .fill{height:100%;background:var(--t2);border-radius:999px;}
+.age.hi .fill{background:var(--terra);}
+.age .p{text-align:right;color:var(--ink2);}
+.read{font-size:14px;color:var(--ink2);margin-top:18px;line-height:1.6;}
+.read b{color:var(--ink);font-weight:600;}
+.src{font-size:11.5px;color:var(--mute);margin-top:14px;}
+
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.rule{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;}
+.rule h3{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;font-weight:600;}
+.rule.yes h3{color:var(--sage);}.rule.no h3{color:var(--terra);}
+.rule ul{list-style:none;}
+.rule li{font-size:13px;color:var(--ink2);padding:5px 0;line-height:1.45;}
+
+footer{margin-top:48px;text-align:center;font-size:12px;color:var(--mute);line-height:1.8;}
+footer .sig{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink2);}
+
+@media (max-width:420px){
+  .rules{grid-template-columns:1fr;}
+  .chart{gap:5px;height:130px;}.hours{gap:5px;}
+  .days{gap:4px;}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="for">Feito para Dr. Alex Tanaka</div>
+    <div class="handles">
+      <span class="handle">@dralextanaka.urologiainfantil</span>
+      <span class="handle">@master.clinica</span>
+    </div>
+    <div class="both">Vale pros dois perfis.</div>
+  </header>
+
+  <h1 class="ask">Posso postar agora?</h1>
+
+  <div class="now">
+    <div class="clock"><span class="dot"></span><span id="clock">Carregando</span></div>
+    <div class="answer" id="answer">...</div>
+    <p class="why" id="why"></p>
+    <p class="next" id="next"></p>
+  </div>
+
+  <section>
+    <div class="kicker">A semana</div>
+    <h2>Os três melhores momentos</h2>
+    <ol class="top">
+      <li><span class="n">1</span><span class="d">Domingo</span><span class="h">18h às 21h</span></li>
+      <li><span class="n">2</span><span class="d">Segunda</span><span class="h">18h às 21h</span></li>
+      <li><span class="n">3</span><span class="d">Terça</span><span class="h">18h às 21h</span></li>
+    </ol>
+    <p class="quote">Posta uns 30 a 45 minutos antes do pico, perto das 17h30. O vídeo chega na hora cheia já com engajamento, e o Instagram entrega mais.</p>
+  </section>
+
+  <section>
+    <div class="kicker">Escolhe o dia</div>
+    <h2>Outro dia, outro horário</h2>
+    <div class="days" id="days"></div>
+    <div class="dayname"><span class="full" id="dFull"></span><span class="tag" id="dTag"></span></div>
+    <div class="chart" id="chart"></div>
+    <div class="hours"><span>0h</span><span>3h</span><span>6h</span><span>9h</span><span>12h</span><span>15h</span><span>18h</span><span>21h</span></div>
+    <div class="pick" id="pick">Toca numa barra pra ver aquele horário.</div>
+    <p class="best" id="best"></p>
+    <div class="legend">
+      <span><i style="background:var(--t3)"></i>Melhor</span>
+      <span><i style="background:var(--t2)"></i>Bom</span>
+      <span><i style="background:var(--t1)"></i>Médio</span>
+      <span><i style="background:var(--t0)"></i>Fraco</span>
+    </div>
+  </section>
+
+  <section>
+    <details>
+      <summary><span class="st">O teu público</span><span class="plus">+</span></summary>
+      <div class="aud">
+        <div class="stats">
+          <div class="stat"><div class="v">99,4%</div><div class="l">no Brasil</div></div>
+          <div class="stat"><div class="v">99,7%</div><div class="l">falam português</div></div>
+        </div>
+
+        <div class="sub">Gênero</div>
+        <div class="split"><div class="m" style="width:59.7%"></div><div class="f" style="width:40.3%"></div></div>
+        <div class="splitl"><span>Homens 59,7%</span><span>Mulheres 40,3%</span></div>
+
+        <div class="sub">Faixa etária</div>
+        <div id="ages"></div>
+
+        <p class="read">Seis em cada dez seguidores têm <b>35 a 54 anos</b>. É gente que trabalha de dia e abre o Instagram <b>depois do expediente</b>, por isso o pico é das 18h às 21h. É a idade de quem tem filho em casa: conteúdo que responde dúvida de pai e mãe tem tudo pra ser salvo e compartilhado.</p>
+        <p class="src">Fonte: Insights do Instagram, aba Público, outubro de 2026. Horário de Brasília.</p>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <div class="kicker">Pra não errar</div>
+    <div class="rules">
+      <div class="rule yes">
+        <h3>Ajuda</h3>
+        <ul>
+          <li>Postar sempre no mesmo horário</li>
+          <li>Chegar antes do pico, não no meio</li>
+          <li>Gancho forte nos 3 primeiros segundos</li>
+          <li>Pergunta no fim da legenda</li>
+        </ul>
+      </div>
+      <div class="rule no">
+        <h3>Atrapalha</h3>
+        <ul>
+          <li>Madrugada, das 0h às 6h</li>
+          <li>Postar às 21h30 e torcer</li>
+          <li>Horário diferente a cada dia</li>
+          <li>Competir com jogo da seleção ou final de novela</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="sig">um presente de Renan Horisawa</div>
+    <div>pulsar.science</div>
+  </footer>
+
+</div>
+
+<script>
+const TZ = 'America/Sao_Paulo';
+const BLOCKS = [0,3,6,9,12,15,18,21];
+
+const DAYS = [
+  {i:0, ab:'D', full:'Domingo',  tag:'Um dos três melhores', act:[36,17,56,86,92,95,100,89], best:'18h às 21h'},
+  {i:1, ab:'S', full:'Segunda',  tag:'Um dos três melhores', act:[30,15,60,84,88,90,100,86], best:'18h às 21h'},
+  {i:2, ab:'T', full:'Terça',    tag:'Um dos três melhores', act:[30,15,60,84,89,91,100,86], best:'18h às 21h'},
+  {i:3, ab:'Q', full:'Quarta',   tag:'Noite boa',            act:[30,15,59,83,88,90,96,85],  best:'18h às 21h'},
+  {i:4, ab:'Q', full:'Quinta',   tag:'Noite boa',            act:[30,15,59,83,88,90,95,85],  best:'18h às 21h'},
+  {i:5, ab:'S', full:'Sexta',    tag:'Cai mais cedo',        act:[32,16,57,82,87,88,92,84],  best:'12h às 13h e 18h às 20h'},
+  {i:6, ab:'S', full:'Sábado',   tag:'Dia mais leve',        act:[38,18,48,80,88,88,90,86],  best:'12h às 15h e 18h às 20h'}
+];
+const ORDER = [0,1,2,3,4,5,6];
+
+function tierOf(day, b){
+  const v = DAYS[day].act[b];
+  if(v >= 98 && day <= 2) return 3;
+  if(v >= 85) return 2;
+  if(v >= 55) return 1;
+  return 0;
+}
+const TIER_NAME = ['Fraco','Médio','Bom','Melhor'];
+
+function nowSP(){
+  const p = new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',hour:'numeric',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+  const get = t => p.find(x=>x.type===t).value;
+  const wd = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[get('weekday')];
+  return {day:wd, hour:parseInt(get('hour'),10)%24, min:parseInt(get('minute'),10)};
+}
+const blockOf = h => Math.floor(h/3);
+const bLabel = b => `${BLOCKS[b]}h às ${b===7?'0h':BLOCKS[b]+3+'h'}`;
+
+function nextGold(day, hour){
+  for(let step=1; step<=168; step++){
+    const t = hour + step, d = (day + Math.floor(t/24)) % 7, h = t % 24;
+    if(h % 3 === 0 && tierOf(d, blockOf(h)) === 3) return {d, h};
+  }
+  return null;
+}
+
+function updateNow(){
+  const n = nowSP(), d = DAYS[n.day], b = blockOf(n.hour), t = tierOf(n.day, b);
+  const mm = String(n.min).padStart(2,'0');
+  document.getElementById('clock').textContent = `${d.full}, ${n.hour}h${mm}`;
+  const ans = document.getElementById('answer'), why = document.getElementById('why'), nx = document.getElementById('next');
+  const ng = nextGold(n.day, n.hour);
+  const ngTxt = ng ? `${ng.d===n.day?'hoje':DAYS[ng.d].full.toLowerCase()}, às ${ng.h}h` : '';
+  const preGold = ng && ng.d===n.day && ng.h - n.hour === 1;
+
+  let a, w, lv;
+  if(t === 3){ a='Posta.'; lv=3; w='Teu público tá no pico agora. É a hora de soltar o melhor conteúdo.'; }
+  else if(preGold){ a='Posta já.'; lv=3; w=`O pico começa às ${ng.h}h. Postando agora, o vídeo chega quente na hora cheia.`; }
+  else if(t === 2){ a='Pode.'; lv=2; w='Boa parte do teu público tá online. Rende bem.'; }
+  else if(t === 1){ a='Dá, mas espera.'; lv=1; w='Movimento médio. Se der pra segurar, guarda pra próxima janela boa.'; }
+  else { a='Agora não.'; lv=0; w='Teu público tá dormindo. O que sair agora afunda antes de alguém ver.'; }
+
+  ans.textContent = a; ans.className = 'answer lv' + lv; why.textContent = w;
+  if(t === 3) nx.innerHTML = `A janela vai até as <b>${b===7?'0h':BLOCKS[b]+3+'h'}</b>.`;
+  else nx.innerHTML = ng ? `Próximo melhor momento: <b>${ngTxt}</b>.` : '';
+}
+
+let sel = null, selBar = null;
+
+function renderDays(){
+  const host = document.getElementById('days'), today = nowSP().day;
+  host.innerHTML = '';
+  ORDER.forEach(i=>{
+    const btn = document.createElement('button');
+    btn.className = 'day'; btn.setAttribute('aria-label', DAYS[i].full);
+    btn.innerHTML = DAYS[i].ab + (i===today ? '<span class="td"></span>' : '');
+    btn.addEventListener('click', ()=> selectDay(i));
+    host.appendChild(btn);
+  });
+}
+
+function selectDay(i){
+  sel = i; selBar = null;
+  const n = nowSP(), d = DAYS[i];
+  document.querySelectorAll('.day').forEach((b,pos)=> b.classList.toggle('sel', ORDER[pos]===i));
+  document.getElementById('dFull').textContent = d.full;
+  document.getElementById('dTag').textContent = (i===n.day ? 'Hoje · ' : '') + d.tag;
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  d.act.forEach((v,b)=>{
+    const bar = document.createElement('button');
+    bar.className = 'bar t' + tierOf(i,b);
+    bar.style.height = '4%';
+    bar.setAttribute('aria-label', `${bLabel(b)}: ${TIER_NAME[tierOf(i,b)]}`);
+    if(i===n.day && b===blockOf(n.hour)) bar.innerHTML = '<span class="here">agora</span>';
+    bar.addEventListener('click', ()=> pickBar(b));
+    chart.appendChild(bar);
+    requestAnimationFrame(()=> requestAnimationFrame(()=>{ bar.style.height = Math.max(v,6) + '%'; }));
+  });
+  document.getElementById('best').innerHTML = `Melhor horário de ${d.full.toLowerCase()}: <b>${d.best}</b>`;
+  document.getElementById('pick').innerHTML = 'Toca numa barra pra ver aquele horário.';
+}
+
+function pickBar(b){
+  selBar = b;
+  document.querySelectorAll('.bar').forEach((el,idx)=> el.classList.toggle('on', idx===b));
+  const t = tierOf(sel,b), v = DAYS[sel].act[b];
+  const txt = ['Fraco. Pouca gente online, evita.','Médio. Dá pra postar, mas não é o ideal.','Bom. Rende bem.','Melhor horário. Joga o conteúdo forte aqui.'][t];
+  document.getElementById('pick').innerHTML = `<b>${DAYS[sel].full}, ${bLabel(b)}</b> · ${txt}`;
+}
+
+function renderAges(){
+  const A = [['13-17',0.0],['18-24',1.6],['25-34',11.3],['35-44',29.5],['45-54',30.4],['55-64',17.6],['65+',9.6]];
+  const max = 30.4;
+  document.getElementById('ages').innerHTML = A.map(([l,p])=>
+    `<div class="age${p>=29?' hi':''}"><span>${l}</span><div class="track"><div class="fill" style="width:${p/max*100}%"></div></div><span class="p">${p.toFixed(1).replace('.',',')}%</span></div>`
+  ).join('');
+}
+
+renderDays();
+selectDay(nowSP().day);
+renderAges();
+updateNow();
+setInterval(updateNow, 30000);
+</script>
+</body>
+</html>
