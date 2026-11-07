@@ -110,7 +110,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
   <div class="card">
     <div class="row">
       <div class="when" id="when"><span class="dot"></span><span id="whenT">--</span></div>
-      <div class="acts"><button class="back" id="back">agora</button><button class="best" id="best">melhor horário ›</button></div>
+      <div class="acts"><button class="back" id="back">agora</button><button class="best" id="best">próximo melhor ›</button></div>
     </div>
     <div class="mid">
       <div><span class="verb" id="verb">...</span><span class="lvl" id="lvl"></span></div>
@@ -213,7 +213,7 @@ function draw(){
   g+=`<path d="${path}" fill="none" stroke="#D14F7B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
   g+=`<line x1="0" y1="${BOT}" x2="${W}" y2="${BOT}" stroke="#F4E2E9"/>`;
   const cx=X(hf), cy=Y(score(day,hf));
-  const lbl=live?`agora · ${hm(hf)}`:bestMode?`melhor · ${hm(hf)}`:hm(hf);
+  const lbl=live?`agora · ${hm(hf)}`:bestMode?`próximo melhor · ${hm(hf)}`:hm(hf);
   const bw=lbl.length*6.3+16, bh=19;
   const bx=Math.min(W-bw/2,Math.max(bw/2,cx)), by=Math.max(0,cy-bh-12);
   const fill=(live||bestMode)?'#D14F7B':'#2C2127';
@@ -247,7 +247,7 @@ function draw(){
     else if(g2) msg=`Próximo pico: <b>${g2.k===0?'hoje':g2.k===1?'amanhã':DN[g2.d].toLowerCase()}, 18h</b> · faltam <b>${dur(g2.mins)}</b>`;
   }else if(bestMode){
     const b=nextBest();
-    msg=`Melhor horário: <b>${b.k===0?'hoje':b.k===1?'amanhã':DN[b.d].toLowerCase()}, 17h30</b>. O pico começa às 18h e o vídeo chega quente na hora cheia. Faltam <b>${dur(b.mins)}</b>.`;
+    msg=`Próximo melhor: <b>${b.k===0?'hoje':b.k===1?'amanhã':DN[b.d].toLowerCase()}, 17h30</b>. O pico começa às 18h e o vídeo chega quente na hora cheia. Faltam <b>${dur(b.mins)}</b>.`;
   }else{
     if(preGold) msg=`<b>${hm(hf)}</b>: perfeito, meia hora antes do pico.`;
     else if(t===3) msg=`<b>${hm(hf)}</b>: pico do teu público. Conteúdo mais forte da semana aqui.`;
