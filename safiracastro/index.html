@@ -35,8 +35,11 @@ header{text-align:center;margin-bottom:12px;}
 .when .dot{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:breathe 2.4s ease-in-out infinite;}
 .when.scrub .dot{background:var(--ink);animation:none;}
 @keyframes breathe{0%,100%{opacity:1}50%{opacity:.25}}
-.back{font-size:11px;font-weight:700;color:var(--rose);background:var(--blush);border:0;border-radius:999px;padding:5px 10px;cursor:pointer;font-family:inherit;visibility:hidden;}
-.back.on{visibility:visible;}
+.acts{display:flex;gap:6px;align-items:center;}
+.back{font-size:11px;font-weight:700;color:var(--ink2);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer;font-family:inherit;display:none;}
+.back.on{display:inline-block;}
+.best{font-size:11px;font-weight:700;color:#fff;background:var(--rose);border:0;border-radius:999px;padding:6px 11px;cursor:pointer;font-family:inherit;box-shadow:0 6px 14px -8px rgba(209,79,123,.8);}
+.best.on{background:var(--ink);}
 .mid{display:flex;justify-content:space-between;align-items:flex-end;margin-top:4px;}
 .verb{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1;letter-spacing:-.5px;transition:color .25s;}
 .verb.go{color:var(--rose);}
@@ -107,7 +110,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
   <div class="card">
     <div class="row">
       <div class="when" id="when"><span class="dot"></span><span id="whenT">--</span></div>
-      <button class="back" id="back">voltar pra agora</button>
+      <div class="acts"><button class="back" id="back">agora</button><button class="best" id="best">melhor horário ›</button></div>
     </div>
     <div class="mid">
       <div><span class="verb" id="verb">...</span><span class="lvl" id="lvl"></span></div>
@@ -119,7 +122,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
     </div>
     <div class="days" id="days"></div>
     <div class="pill" id="pill"></div>
-    <div class="hint">arrasta o dedo no gráfico pra ver cada horário</div>
+    <div class="hint">arrasta o dedo no gráfico pra ver o horário exato</div>
   </div>
 
   <div class="duo">
@@ -191,9 +194,9 @@ function nextGold(n){
 }
 
 /* estado */
-let day=now().d, sel=null; // sel = hora escolhida no arrasto (null = agora)
+let day=now().d, sel=null, bestMode=false; // sel = hora escolhida (null = agora)
 
-const W=340,H=118,TOP=14,BOT=108;
+const W=340,H=118,TOP=26,BOT=108;
 const X=h=>h/24*W, Y=s=>BOT-(s/100)*(BOT-TOP);
 
 function draw(){
@@ -204,18 +207,22 @@ function draw(){
   let g=`<defs><linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D14F7B" stop-opacity=".32"/><stop offset="1" stop-color="#D14F7B" stop-opacity="0"/></linearGradient></defs>`;
   BEST[day].forEach(r=>{
     g+=`<rect x="${X(r[0])}" y="0" width="${X(r[1])-X(r[0])}" height="${BOT}" rx="7" fill="#FDEEF3"/>`;
-    g+=`<text x="${(X(r[0])+X(r[1]))/2}" y="10" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".6" fill="#D14F7B" font-family="Manrope">${GOLD.includes(day)&&r[0]===18?'PICO':'MELHOR'}</text>`;
+    g+=`<text x="${(X(r[0])+X(r[1]))/2}" y="10" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".6" fill="#D14F7B" font-family="Manrope" opacity=".85">${GOLD.includes(day)&&r[0]===18?'PICO':'MELHOR'}</text>`;
   });
   g+=`<path d="${path} L${W},${BOT} L0,${BOT} Z" fill="url(#gr)"/>`;
   g+=`<path d="${path}" fill="none" stroke="#D14F7B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
   g+=`<line x1="0" y1="${BOT}" x2="${W}" y2="${BOT}" stroke="#F4E2E9"/>`;
   const cx=X(hf), cy=Y(score(day,hf));
-  const lbl=live?'agora':hm(hf);
-  const tx=Math.min(W-16,Math.max(16,cx));
+  const lbl=live?`agora · ${hm(hf)}`:bestMode?`melhor · ${hm(hf)}`:hm(hf);
+  const bw=lbl.length*6.3+16, bh=19;
+  const bx=Math.min(W-bw/2,Math.max(bw/2,cx)), by=Math.max(0,cy-bh-12);
+  const fill=(live||bestMode)?'#D14F7B':'#2C2127';
   g+=`<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${BOT}" stroke="#2C2127" stroke-dasharray="3 3"/>`;
+  if(bestMode) g+=`<circle cx="${cx}" cy="${cy}" r="14" fill="none" stroke="#D14F7B" stroke-width="1.5" opacity=".5"><animate attributeName="r" values="8;18;8" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="2s" repeatCount="indefinite"/></circle>`;
   g+=`<circle cx="${cx}" cy="${cy}" r="11" fill="#D14F7B" opacity=".16"/>`;
-  g+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#fff" stroke="#2C2127" stroke-width="2"/>`;
-  g+=`<text x="${tx}" y="${Math.max(9,cy-15)}" text-anchor="middle" font-size="10" font-weight="700" fill="#2C2127" font-family="Manrope">${lbl}</text>`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#fff" stroke="${fill}" stroke-width="2.2"/>`;
+  g+=`<rect x="${bx-bw/2}" y="${by}" width="${bw}" height="${bh}" rx="9.5" fill="${fill}"/>`;
+  g+=`<text x="${bx}" y="${by+13}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="Manrope">${lbl}</text>`;
   g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
   document.getElementById('svg').innerHTML=g;
 
@@ -223,12 +230,13 @@ function draw(){
   const v=document.getElementById('verb');
   v.textContent=t>=2?'Solta.':'Segura.';
   v.className='verb '+(t>=2?'go':'hold');
-  const L=document.getElementById('lvl'); L.className='lvl l'+t; L.textContent=LAB[t];
+  const L=document.getElementById('lvl'); L.className='lvl l'+(bestMode?3:t); L.textContent=bestMode?'IDEAL':LAB[t];
   document.getElementById('pct').textContent=s;
   const w=document.getElementById('when');
   w.classList.toggle('scrub',!live);
   document.getElementById('whenT').textContent=live?`${DN[day]} · ${hm(hf)}`:`${DN[day]} · ${hm(hf)}`;
   document.getElementById('back').classList.toggle('on',!live);
+  document.getElementById('best').classList.toggle('on',bestMode);
 
   let msg;
   const preGold=GOLD.includes(day)&&hf>=17&&hf<18;
@@ -237,6 +245,9 @@ function draw(){
     if(t===3) msg=`Pico agora. Vai até as <b>21h</b>, solta o conteúdo mais forte.`;
     else if(preGold) msg=`Hora perfeita: o pico começa às <b>18h</b>. Postando agora, o vídeo chega quente na hora cheia.`;
     else if(g2) msg=`Próximo pico: <b>${g2.k===0?'hoje':g2.k===1?'amanhã':DN[g2.d].toLowerCase()}, 18h</b> · faltam <b>${dur(g2.mins)}</b>`;
+  }else if(bestMode){
+    const b=nextBest();
+    msg=`Melhor horário: <b>${b.k===0?'hoje':b.k===1?'amanhã':DN[b.d].toLowerCase()}, 17h30</b>. O pico começa às 18h e o vídeo chega quente na hora cheia. Faltam <b>${dur(b.mins)}</b>.`;
   }else{
     if(preGold) msg=`<b>${hm(hf)}</b>: perfeito, meia hora antes do pico.`;
     else if(t===3) msg=`<b>${hm(hf)}</b>: pico do teu público. Conteúdo mais forte da semana aqui.`;
@@ -253,7 +264,7 @@ function renderDays(){
     const b=document.createElement('button');
     b.textContent=DA[d];
     b.className=(d===day?'on ':'')+(d===n.d?'today':'');
-    b.onclick=()=>{day=d; sel=(d===now().d)?null:18.5; renderDays(); draw();};
+    b.onclick=()=>{day=d; bestMode=false; sel=(d===now().d)?null:18.5; renderDays(); draw();};
     host.appendChild(b);
   });
 }
@@ -264,15 +275,32 @@ let drag=false;
 function pick(e){
   const r=svg.getBoundingClientRect();
   let h=(e.clientX-r.left)/r.width*24;
-  h=Math.min(23.75,Math.max(0,Math.round(h*4)/4));
-  sel=h; draw();
+  h=Math.min(23+59/60,Math.max(0,Math.round(h*60)/60));
+  bestMode=false; sel=h; draw();
 }
-svg.addEventListener('pointerdown',e=>{drag=true;pick(e);});
+svg.addEventListener('pointerdown',e=>{drag=true;try{svg.setPointerCapture(e.pointerId);}catch(_){}pick(e);});
 svg.addEventListener('pointermove',e=>{if(drag)pick(e);});
-['pointerup','pointercancel','pointerleave'].forEach(ev=>svg.addEventListener(ev,()=>{drag=false;}));
-document.getElementById('back').onclick=()=>{day=now().d;sel=null;renderDays();draw();};
+['pointerup','pointercancel'].forEach(ev=>svg.addEventListener(ev,()=>{drag=false;}));
+document.getElementById('back').onclick=()=>{day=now().d;sel=null;bestMode=false;renderDays();draw();};
 
-document.querySelectorAll('.top').forEach(b=>b.onclick=()=>{day=+b.dataset.d;sel=17.5;renderDays();draw();});
+/* proximo melhor horario: 17h30 do proximo dia de ouro (meia hora antes do pico) */
+function nextBest(){
+  const n=now(), t0=n.h*60+n.m;
+  for(let k=0;k<8;k++){
+    const d=(n.d+k)%7; if(!GOLD.includes(d)) continue;
+    const at=k*1440+17*60+30;
+    if(k===0&&t0>=17*60+30&&t0<21*60) return {d,k,mins:0,now:true};
+    if(at>t0) return {d,k,mins:at-t0};
+  }
+}
+document.getElementById('best').onclick=()=>{
+  const b=nextBest();
+  day=b.d;
+  if(b.now){sel=null;bestMode=false;}else{sel=17.5;bestMode=true;}
+  renderDays();draw();
+};
+
+document.querySelectorAll('.top').forEach(b=>b.onclick=()=>{day=+b.dataset.d;sel=17.5;bestMode=false;renderDays();draw();});
 renderDays(); draw();
 setInterval(()=>{ if(sel===null) draw(); },30000);
 </script>
