@@ -38,8 +38,24 @@ header{text-align:center;margin-bottom:12px;}
 .acts{display:flex;gap:6px;align-items:center;}
 .back{font-size:11px;font-weight:700;color:var(--ink2);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer;font-family:inherit;display:none;}
 .back.on{display:inline-block;}
-.best{font-size:11px;font-weight:700;color:#fff;background:var(--rose);border:0;border-radius:999px;padding:6px 11px;cursor:pointer;font-family:inherit;box-shadow:0 6px 14px -8px rgba(209,79,123,.8);}
-.best.on{background:var(--ink);}
+.bestBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;border:0;border-radius:14px;padding:11px 14px;background:var(--rose);color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 10px 20px -12px rgba(209,79,123,.9);}
+.bestBtn:active{transform:scale(.98);}
+.sheet{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(44,33,39,0);pointer-events:none;transition:background .25s;}
+.sheet.on{background:rgba(44,33,39,.38);pointer-events:auto;}
+.panel{width:100%;max-width:480px;background:#fff;border-radius:28px 28px 0 0;padding:12px 22px calc(26px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1);text-align:center;}
+.sheet.on .panel{transform:translateY(0);}
+.grab{width:40px;height:4px;border-radius:999px;background:#EDD9E1;margin:0 auto 18px;}
+.pk{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--rose);font-weight:700;}
+.pd{font-family:'Cormorant',serif;font-size:30px;line-height:1.1;margin-top:10px;}
+.pt{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:84px;line-height:.9;color:var(--rose);letter-spacing:-2px;margin:2px 0 6px;}
+.pc{display:inline-block;background:var(--blush);color:var(--rose-d);border-radius:999px;padding:7px 14px;font-size:13px;font-variant-numeric:tabular-nums;}
+.pc b{font-weight:700;}
+.pw{font-size:13.5px;color:var(--ink2);line-height:1.55;margin:16px auto 0;max-width:34ch;}
+.pw b{color:var(--ink);}
+.pn{display:flex;justify-content:center;align-items:center;gap:8px;font-size:11.5px;color:var(--mute);margin-top:16px;flex-wrap:wrap;}
+.pn span{font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--ink2);}
+.pn span b{color:var(--ink);}
+.close{margin-top:18px;width:100%;border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:12px;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;}
 .mid{display:flex;justify-content:space-between;align-items:flex-end;margin-top:4px;}
 .verb{font-family:'Cormorant',serif;font-style:italic;font-weight:500;font-size:44px;line-height:1;letter-spacing:-.5px;transition:color .25s;}
 .verb.go{color:var(--rose);}
@@ -110,7 +126,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
   <div class="card">
     <div class="row">
       <div class="when" id="when"><span class="dot"></span><span id="whenT">--</span></div>
-      <div class="acts"><button class="back" id="back">agora</button><button class="best" id="best">próximo melhor ›</button></div>
+      <div class="acts"><button class="back" id="back">voltar pra agora</button></div>
     </div>
     <div class="mid">
       <div><span class="verb" id="verb">...</span><span class="lvl" id="lvl"></span></div>
@@ -122,7 +138,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
     </div>
     <div class="days" id="days"></div>
     <div class="pill" id="pill"></div>
-    <div class="hint">arrasta o dedo no gráfico pra ver o horário exato</div>
+    <button class="bestBtn" id="best">Próximo melhor horário</button>
   </div>
 
   <div class="duo">
@@ -143,6 +159,19 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color
     <div class="sig">Renan Horisawa | pulsar.science</div>
   </footer>
 
+</div>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="panel" role="dialog" aria-label="Próximo melhor horário">
+    <div class="grab"></div>
+    <div class="pk" id="pK">Próximo melhor horário</div>
+    <div class="pd" id="pD"></div>
+    <div class="pt" id="pT">17h30</div>
+    <div class="pc" id="pC"></div>
+    <p class="pw" id="pW"></p>
+    <div class="pn" id="pN"></div>
+    <button class="close" id="close">Fechar</button>
+  </div>
 </div>
 
 <script>
@@ -223,6 +252,7 @@ function draw(){
   g+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#fff" stroke="${fill}" stroke-width="2.2"/>`;
   g+=`<rect x="${bx-bw/2}" y="${by}" width="${bw}" height="${bh}" rx="9.5" fill="${fill}"/>`;
   g+=`<text x="${bx}" y="${by+13}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="Manrope">${lbl}</text>`;
+  if(live) g+=`<text x="2" y="10" font-size="8.5" font-weight="600" fill="#AC97A2" font-family="Manrope">arrasta o dedo pra ver o horário exato</text>`;
   g+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
   document.getElementById('svg').innerHTML=g;
 
@@ -236,7 +266,6 @@ function draw(){
   w.classList.toggle('scrub',!live);
   document.getElementById('whenT').textContent=live?`${DN[day]} · ${hm(hf)}`:`${DN[day]} · ${hm(hf)}`;
   document.getElementById('back').classList.toggle('on',!live);
-  document.getElementById('best').classList.toggle('on',bestMode);
 
   let msg;
   const preGold=GOLD.includes(day)&&hf>=17&&hf<18;
@@ -244,7 +273,9 @@ function draw(){
     const g2=nextGold(n);
     if(t===3) msg=`Pico agora. Vai até as <b>21h</b>, solta o conteúdo mais forte.`;
     else if(preGold) msg=`Hora perfeita: o pico começa às <b>18h</b>. Postando agora, o vídeo chega quente na hora cheia.`;
-    else if(g2) msg=`Próximo pico: <b>${g2.k===0?'hoje':g2.k===1?'amanhã':DN[g2.d].toLowerCase()}, 18h</b> · faltam <b>${dur(g2.mins)}</b>`;
+    else if(t===2) msg=`Boa parte do teu público tá online. <b>Rende bem.</b>`;
+    else if(t===1) msg=`Pouca gente online agora. Se der, espera o <b>próximo melhor horário</b>.`;
+    else msg=`Teu público tá dormindo. O que sair agora <b>afunda antes de alguém ver</b>.`;
   }else if(bestMode){
     const b=nextBest();
     msg=`Próximo melhor: <b>${b.k===0?'hoje':b.k===1?'amanhã':DN[b.d].toLowerCase()}, 17h30</b>. O pico começa às 18h e o vídeo chega quente na hora cheia. Faltam <b>${dur(b.mins)}</b>.`;
@@ -293,12 +324,43 @@ function nextBest(){
     if(at>t0) return {d,k,mins:at-t0};
   }
 }
-document.getElementById('best').onclick=()=>{
-  const b=nextBest();
-  day=b.d;
-  if(b.now){sel=null;bestMode=false;}else{sel=17.5;bestMode=true;}
-  renderDays();draw();
-};
+function nextBests(){
+  const n=now(), t0=n.h*60+n.m, out=[];
+  for(let k=0;k<15&&out.length<3;k++){
+    const d=(n.d+k)%7; if(!GOLD.includes(d)) continue;
+    const at=k*1440+17*60+30;
+    if(k===0&&t0>=17*60+30&&t0<21*60){out.push({d,k,mins:0,now:true});continue;}
+    if(at>t0) out.push({d,k,mins:at-t0});
+  }
+  return out;
+}
+const when2=b=>b.k===0?'Hoje':b.k===1?'Amanhã':DN[b.d];
+function fillSheet(){
+  const L=nextBests(), b=L[0];
+  if(b.now){
+    document.getElementById('pK').textContent='Tua janela de ouro';
+    document.getElementById('pD').textContent='É agora';
+    document.getElementById('pT').textContent='até 21h';
+    const n=now(); const left=21*60-(n.h*60+n.m);
+    document.getElementById('pC').innerHTML=`fecha em <b>${dur(left)}</b>`;
+    document.getElementById('pW').innerHTML='O pico do teu público tá rolando. <b>Solta o conteúdo mais forte da semana.</b>';
+  }else{
+    document.getElementById('pK').textContent='Próximo melhor horário';
+    document.getElementById('pD').textContent=b.k>1?DN[b.d]:`${when2(b)}, ${DN[b.d].toLowerCase()}`;
+    document.getElementById('pT').textContent='17h30';
+    document.getElementById('pC').innerHTML=`faltam <b>${dur(b.mins)}</b>`;
+    document.getElementById('pW').innerHTML='Posta meia hora antes do pico, que vai das <b>18h às 21h</b>. O vídeo chega na hora cheia já com engajamento.';
+  }
+  document.getElementById('pN').innerHTML='Depois: '+L.slice(1).map(x=>`<span><b>${when2(x).toLowerCase()==='amanhã'?'amanhã':DN[x.d].toLowerCase()}</b> 17h30</span>`).join('');
+}
+let sheetTimer=null;
+const sheet=document.getElementById('sheet');
+function openSheet(){fillSheet();sheet.classList.add('on');sheet.setAttribute('aria-hidden','false');sheetTimer=setInterval(fillSheet,30000);}
+function closeSheet(){sheet.classList.remove('on');sheet.setAttribute('aria-hidden','true');clearInterval(sheetTimer);}
+document.getElementById('best').onclick=openSheet;
+document.getElementById('close').onclick=closeSheet;
+sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
 
 document.querySelectorAll('.top').forEach(b=>b.onclick=()=>{day=+b.dataset.d;sel=17.5;bestMode=false;renderDays();draw();});
 renderDays(); draw();
