@@ -20,12 +20,12 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-text-size-adjust:100%;}
-body{font-family:'Manrope',system-ui,sans-serif;font-variant-numeric:lining-nums;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:26px 16px 36px;}
+body{font-family:'Manrope',system-ui,sans-serif;font-variant-numeric:lining-nums;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:18px 16px 20px;}
 .wrap{max-width:480px;margin:0 auto;}
 
-header{text-align:center;margin-bottom:18px;}
+header{text-align:center;margin-bottom:12px;}
 .ey{font-size:10px;letter-spacing:3.2px;text-transform:uppercase;color:var(--rose);font-weight:600;}
-.nm{font-family:'Cormorant',serif;font-weight:400;font-size:34px;line-height:1.05;margin:6px 0 3px;}
+.nm{font-family:'Cormorant',serif;font-weight:400;font-size:31px;line-height:1.05;margin:4px 0 2px;}
 .nm em{font-style:italic;color:var(--rose);}
 .sp{font-size:10px;letter-spacing:4.5px;text-transform:uppercase;color:var(--ink2);}
 
@@ -58,12 +58,28 @@ header{text-align:center;margin-bottom:18px;}
 .days button.today::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--rose);}
 .days button.on.today::after{background:#fff;}
 
-.pill{margin-top:12px;background:var(--blush);border-radius:14px;padding:10px 13px;font-size:12.5px;color:var(--rose-d);min-height:40px;}
+.pill{margin-top:10px;background:var(--blush);border-radius:14px;padding:9px 12px;font-size:12.5px;color:var(--rose-d);min-height:38px;line-height:1.45;}
 .pill b{font-weight:700;}
-.hint{text-align:center;font-size:11px;color:var(--mute);margin-top:9px;}
+.hint{text-align:center;font-size:10.5px;color:var(--mute);margin-top:7px;}
 
-footer{margin-top:22px;text-align:center;font-size:10.5px;color:var(--mute);line-height:1.7;}
-footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:14px;color:var(--ink2);}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px 13px 10px;}
+.bt{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--rose);font-weight:700;margin-bottom:6px;}
+.top{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:6px 0;font-family:inherit;text-align:left;cursor:pointer;color:var(--ink);}
+.top:last-child{border-bottom:0;}
+.top i{font-family:'Cormorant',serif;font-style:italic;font-size:19px;color:var(--rose);width:12px;line-height:1;}
+.top span{font-size:12px;font-weight:700;line-height:1.2;}
+.top small{display:block;font-size:10.5px;font-weight:500;color:var(--ink2);}
+.st{padding:5px 0;border-bottom:1px solid var(--line);}
+.st:last-child{border-bottom:0;}
+.st b{font-family:'Cormorant',serif;font-weight:500;font-size:21px;line-height:1;}
+.st b em{font-style:normal;color:var(--rose);}
+.st span{display:block;font-size:10.5px;color:var(--ink2);line-height:1.3;margin-top:1px;}
+.bar{display:flex;height:4px;border-radius:999px;overflow:hidden;margin-top:4px;background:#F8D2DF;}
+.bar i{background:var(--rose);}
+
+footer{margin-top:8px;text-align:center;font-size:10.5px;color:var(--mute);line-height:1.7;}
+footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:13px;color:var(--ink2);}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
@@ -86,7 +102,7 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:14px;color
       <div class="pct"><b id="pct">0</b><small>%</small><span>do pico da semana</span></div>
     </div>
     <div class="chart">
-      <svg id="svg" viewBox="0 0 340 128" aria-label="Gente online ao longo do dia. Arrasta pra ver cada horário."></svg>
+      <svg id="svg" viewBox="0 0 340 118" aria-label="Gente online ao longo do dia. Arrasta pra ver cada horário."></svg>
       <div class="axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span></div>
     </div>
     <div class="days" id="days"></div>
@@ -94,9 +110,23 @@ footer .sig{font-family:'Cormorant',serif;font-style:italic;font-size:14px;color
     <div class="hint">arrasta o dedo no gráfico pra ver cada horário</div>
   </div>
 
+  <div class="duo">
+    <div class="box">
+      <div class="bt">Top horários</div>
+      <button class="top" data-d="0"><i>1</i><span>Domingo<small>18h às 21h</small></span></button>
+      <button class="top" data-d="1"><i>2</i><span>Segunda<small>18h às 21h</small></span></button>
+      <button class="top" data-d="2"><i>3</i><span>Terça<small>18h às 21h</small></span></button>
+    </div>
+    <div class="box">
+      <div class="bt">Teu público</div>
+      <div class="st"><b><em>81%</em></b> <span>mulheres</span><div class="bar"><i style="width:81%"></i></div></div>
+      <div class="st"><b><em>63%</em></b> <span>têm 45 anos ou mais</span></div>
+      <div class="st"><b>4.984</b> <span>seguidores, +4,2% no mês</span></div>
+    </div>
+  </div>
+
   <footer>
-    <div class="sig">feito com carinho por Renan Horisawa</div>
-    <div>@drasafiracastro · horário de Brasília</div>
+    <div class="sig">feito com carinho por Renan Horisawa · horário de Brasília</div>
   </footer>
 
 </div>
@@ -152,7 +182,7 @@ function nextGold(n){
 /* estado */
 let day=now().d, sel=null; // sel = hora escolhida no arrasto (null = agora)
 
-const W=340,H=128,TOP=14,BOT=118;
+const W=340,H=118,TOP=14,BOT=108;
 const X=h=>h/24*W, Y=s=>BOT-(s/100)*(BOT-TOP);
 
 function draw(){
@@ -195,7 +225,7 @@ function draw(){
     const g2=nextGold(n);
     if(t===3) msg=`Pico agora. Vai até as <b>21h</b>, solta o conteúdo mais forte.`;
     else if(preGold) msg=`Hora perfeita: o pico começa às <b>18h</b>. Postando agora, o vídeo chega quente na hora cheia.`;
-    else if(g2) msg=`Próximo pico: <b>${g2.k===0?'hoje':g2.k===1?'amanhã':DN[g2.d].toLowerCase()}, 18h</b> · faltam <b>${dur(g2.mins)}</b>. Posta às 17h30.`;
+    else if(g2) msg=`Próximo pico: <b>${g2.k===0?'hoje':g2.k===1?'amanhã':DN[g2.d].toLowerCase()}, 18h</b> · faltam <b>${dur(g2.mins)}</b>`;
   }else{
     if(preGold) msg=`<b>${hm(hf)}</b>: perfeito, meia hora antes do pico.`;
     else if(t===3) msg=`<b>${hm(hf)}</b>: pico do teu público. Conteúdo mais forte da semana aqui.`;
@@ -231,6 +261,7 @@ svg.addEventListener('pointermove',e=>{if(drag)pick(e);});
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>svg.addEventListener(ev,()=>{drag=false;}));
 document.getElementById('back').onclick=()=>{day=now().d;sel=null;renderDays();draw();};
 
+document.querySelectorAll('.top').forEach(b=>b.onclick=()=>{day=+b.dataset.d;sel=17.5;renderDays();draw();});
 renderDays(); draw();
 setInterval(()=>{ if(sel===null) draw(); },30000);
 </script>
